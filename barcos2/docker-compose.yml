@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  server:
+    build:
+      context: ./server
+    container_name: barcos2-server
+    networks:
+      - barcos-network
+    ports:
+      - "8080:8080"
+
+
+  client:
+    build:
+      context: ./client
+    container_name: barcos2-client
+    stdin_open: true  # Habilita la entrada estándar
+    tty: true         # Habilita un terminal pseudo-TTY
+    depends_on:
+      - server
+    networks:
+      - barcos-network
+
+
+networks:
+  barcos-network:
+    driver: bridge
